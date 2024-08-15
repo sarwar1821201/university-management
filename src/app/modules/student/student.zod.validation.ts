@@ -31,7 +31,7 @@ const localGuardianValidationSchema = z.object({
 
 export const studentZodValidationSchema = z.object({
   id: z.string().min(1),
- // password: z.string().max(20),
+  password: z.string().max(20),
   name: userNameValidationSchema,
   gender: z.enum(['male', 'female', 'other']),
 //gender:z.string().min(1).refine((value)=>['male', 'female', 'other'].includes(value),{message:'invalid gender'}),
