@@ -74,7 +74,7 @@ const userNameSchema = new Schema<TUserName>({
     },
   });
   
-  const studentSchema = new Schema<TStudent,StudentModel,StudentMethods>({
+  const studentSchema = new Schema<TStudent,StudentModel>({
     id: { type: String, required: [true, 'ID is required'], unique: true },
     name: {
         type: userNameSchema,
@@ -128,12 +128,17 @@ const userNameSchema = new Schema<TUserName>({
   });
 
 
-  //creating a custom instance method
-studentSchema.methods.isUserExists = async function (id: string) {
+  //creating a custom static method
+studentSchema.statics.isUserExists = async function (id: string) {
   const existingUser = await Student.findOne({ id });
-
   return existingUser;
 };
+
+  //creating a custom instance method
+// studentSchema.methods.isUserExists = async function (id: string) {
+//   const existingUser = await Student.findOne({ id });
+//   return existingUser;
+// };
 
 
   // create model
