@@ -92,10 +92,10 @@ const userNameSchema = new Schema<UserName>({
     email: { 
         type: String, required: true,
         unique:true,
-        validate:{
-            validator:(value:string)=> validator.isEmail(value),
-            message:'{VALUE} is not valid '
-        }
+        // validate:{
+        //     validator:(value:string)=> validator.isEmail(value),
+        //     message:'{VALUE} is not valid '
+        // }
      },
     contactNo: { type: String, required: true },
     emergencyContactNo: { type: String, required: true },
