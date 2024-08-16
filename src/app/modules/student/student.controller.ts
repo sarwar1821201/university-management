@@ -70,12 +70,19 @@ const getAllStudents = async (req: Request, res: Response,next:NextFunction) => 
       const { studentId } = req.params;
   
       const result = await StudentServices.getSingleStudentFromDB(studentId);
+
+      sendResponse(res,{
+        statusCode:httpStatus.OK,
+        success:true,
+        message:'Student is retrieved successfully',
+        data:result
+    })
   
-      res.status(200).json({
-        success: true,
-        message: 'Student is retrieved successfully',
-        data: result,
-      });
+      // res.status(200).json({
+      //   success: true,
+      //   message: 'Student is retrieved successfully',
+      //   data: result,
+      // });
     } catch (err) {
       // res.status(500).json({
       //   success: false,
@@ -91,12 +98,19 @@ const getAllStudents = async (req: Request, res: Response,next:NextFunction) => 
       const { studentId } = req.params;
   
       const result = await StudentServices.deleteStudentFromDB(studentId);
+
+      sendResponse(res,{
+        statusCode:httpStatus.OK,
+        success:true,
+        message:'Student is deleted successfully',
+        data:result
+    })
   
-      res.status(200).json({
-        success: true,
-        message: 'Student is deleted successfully',
-        data: result,
-      });
+      // res.status(200).json({
+      //   success: true,
+      //   message: 'Student is deleted successfully',
+      //   data: result,
+      // });
     } catch (err) {
       // res.status(500).json({
       //   success: false,
