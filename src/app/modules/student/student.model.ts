@@ -1,8 +1,8 @@
 import { model, Schema } from "mongoose";
 import {   StudentModel, TGuardian, TLocalGuardian, TStudent, TUserName} from "./student.interface";
 //import validator from "validator";
-import bcrypt from "bcrypt";
-import config from "../../config";
+//import bcrypt from "bcrypt";
+//import config from "../../config";
 
 
 const userNameSchema = new Schema<TUserName>({
@@ -84,11 +84,11 @@ const userNameSchema = new Schema<TUserName>({
       unique:true,
       ref:'User'
     },
-    password: {
-      type: String,
-      required: [true, 'Password is required'],
-      maxlength: [20, 'Password can not be more than 20 characters'],
-    },
+    // password: {
+    //   type: String,
+    //   required: [true, 'Password is required'],
+    //   maxlength: [20, 'Password can not be more than 20 characters'],
+    // },
     name: {
         type: userNameSchema,
         required: [true, 'Name is required'],
@@ -156,27 +156,25 @@ studentSchema.virtual('fullName').get(function () {
   return ( `${this.name.firstName} ${this.name.middleName} ${this.name.lastName}  `);
 });
 
+//     // pre save middleware/ hook : will work on create()  save()
+// studentSchema.pre('save', async function (next) {
+//   //console.log(this, 'pre hook : we will save  data');
+//   // eslint-disable-next-line @typescript-eslint/no-this-alias
+//   const user = this; // doc
+//   // hashing password and save into DB
+//   user.password = await bcrypt.hash(
+//     user.password,
+//     Number(config.bcrypt_salt_rounds),
+//  );
+//   next();
+// });
 
-
-    // pre save middleware/ hook : will work on create()  save()
-studentSchema.pre('save', async function (next) {
-  //console.log(this, 'pre hook : we will save  data');
-  // eslint-disable-next-line @typescript-eslint/no-this-alias
-  const user = this; // doc
-  // hashing password and save into DB
-  user.password = await bcrypt.hash(
-    user.password,
-    Number(config.bcrypt_salt_rounds),
- );
-  next();
-});
-
-// post save middleware / hook
-studentSchema.post('save', function (doc, next) {
- // console.log(this, 'post hook : we will save  data');
-  doc.password = '';
-  next();
-});
+// // post save middleware / hook
+// studentSchema.post('save', function (doc, next) {
+//  // console.log(this, 'post hook : we will save  data');
+//   doc.password = '';
+//   next();
+// });
 
 
    // Query Middleware
