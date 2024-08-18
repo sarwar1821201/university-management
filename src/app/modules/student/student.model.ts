@@ -101,7 +101,7 @@ const userNameSchema = new Schema<TUserName>({
         },
         required: [true, 'Gender is required'],
       },
-    dateOfBirth: { type: String },
+    dateOfBirth: { type: Date },
     email: { 
         type: String, required: true,
         unique:true,

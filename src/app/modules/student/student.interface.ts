@@ -32,7 +32,7 @@ export type TUserName = {
     password:string;
     name: TUserName;
     gender: 'male' | 'female'|'other';
-    dateOfBirth?: string;
+    dateOfBirth?: Date;
     email: string;
     contactNo: string;
     emergencyContactNo: string;

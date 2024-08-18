@@ -37,7 +37,7 @@ export const createStudentZodValidationSchema = z.object({
         name: userNameValidationSchema,
         gender: z.enum(['male', 'female', 'other']),
       //gender:z.string().min(1).refine((value)=>['male', 'female', 'other'].includes(value),{message:'invalid gender'}),
-        dateOfBirth: z.string().optional(),
+        dateOfBirth: z.date().optional(),
         email: z.string().email(),
         contactNo: z.string().min(1),
         emergencyContactNo: z.string().min(1),
