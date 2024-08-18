@@ -130,6 +130,10 @@ const userNameSchema = new Schema<TUserName>({
         required: [true, 'Local guardian information is required'],
       },
     profileImg: { type: String },
+    admissionSemester:{
+      type:Schema.Types.ObjectId,
+      ref:'AcademicSemester'
+    },
     // isActive: {
     //     type: String,
     //     enum: {
