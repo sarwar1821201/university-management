@@ -8,5 +8,9 @@ const router = express.Router();
 
 router.post('/create-academic-semester', validateRequest (AcademicSemesterValidations.createAcademicSemesterValidationSchema),  AcademicSemesterControllers.createAcademicSemester )
 
+router.get('/:semesterId',AcademicSemesterControllers.getSingleAcademicSemester );
+
+router.get('/', AcademicSemesterControllers.getAllAcademicSemesters);
+
 
 export const AcademicSemesterRoutes=router;
