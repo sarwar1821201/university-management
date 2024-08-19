@@ -28,14 +28,13 @@ const createStudentIntoDB = async ( password:string,payLoad: TStudent) => {
      userData.role='student'
 
       // find academic semester info
-  const admissionSemester = await AcademicSemester.findById(
-   payLoad.admissionSemester,
- );
+  const admissionSemester = await AcademicSemester.findById( payLoad.admissionSemester);
 
     
        // set manually generated id
    // userData.id='203010001'
-   userData.id= await generateStudentId(admissionSemester)
+   //userData.id= await generateStudentId(admissionSemester)
+   userData.id = await generateStudentId(admissionSemester);
 
         // create user
 
