@@ -134,6 +134,10 @@ const userNameSchema = new Schema<TUserName>({
       type:Schema.Types.ObjectId,
       ref:'AcademicSemester'
     },
+    academicDepartment: {
+      type: Schema.Types.ObjectId,
+      ref:'AcademicDepartment',
+    },
     // isActive: {
     //     type: String,
     //     enum: {

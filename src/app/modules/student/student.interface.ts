@@ -43,8 +43,10 @@ export type TUserName = {
     localGuardian: TLocalGuardian;
     profileImg?: string;
     admissionSemester: Types.ObjectId;
+    academicDepartment: Types.ObjectId;
    // isActive: 'active' | 'blocked';
     isDeleted: boolean;
+
   };
 
 
