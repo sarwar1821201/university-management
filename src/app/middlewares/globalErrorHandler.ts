@@ -2,7 +2,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { ErrorRequestHandler, NextFunction, Request, Response } from "express";
-import { TErrorSources } from "../errors/interface/error";
+import { TErrorSources } from "../interface/error";
+import { ZodError } from "zod";
+import handleZodError from "../errors/handleZodError";
+import config from "../config";
+
 
 
 const globalErrorHandler: ErrorRequestHandler  =  (err,req, res,next)=>{
@@ -17,11 +21,20 @@ const globalErrorHandler: ErrorRequestHandler  =  (err,req, res,next)=>{
   ];
 
 
+  if (err instanceof ZodError) {
+    const simplifiedError = handleZodError(err);
+    statusCode = simplifiedError?.statusCode;
+    message = simplifiedError?.message;
+    errorSources = simplifiedError?.errorSources;
+  }
+
+
     return res.status(statusCode).json({
         success:false,
         message,
         errorSources,
-        error:err
+       // error:err,
+       stack: config.NODE_ENV === 'development' ? err?.stack : null,
     })
 
 }
