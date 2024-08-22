@@ -21,12 +21,12 @@ app.use(cors());
    //app.use('/api/v1',UserRoutes)
    
 
-app.get('/', (req:Request, res:Response) => {
-    const a =10;
+   const test = async (req: Request, res: Response) => {
+    const a = 10;
     res.send(a);
-  //res.send('Hello World!')
-})
-  //console.log(process.cwd());
+  };
+  
+  app.get('/', test);
 
   app.use(globalErrorHandler )
 
