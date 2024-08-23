@@ -20,8 +20,25 @@ import { TStudent } from "./student.interface";
 //     return result;
 //   };
 
-  const getAllStudentsFromDB = async () => {
-    const result = await Student.find() .populate('admissionSemester')
+  const getAllStudentsFromDB = async (query: Record<string,unknown> ) => {
+
+     // HOW OUR FORMAT SHOULD BE FOR PARTIAL MATCH  : 
+  //{ email: { $regex : query.searchTerm , $options: i}}
+ // { presentAddress: { $regex : query.searchTerm , $options: i}}
+ // { 'name.firstName': { $regex : query.searchTerm , $options: i}}
+
+    let searchTerm = '';   // SET DEFAULT VALUE 
+
+  // IF searchTerm  IS GIVEN SET IT
+  if (query?.searchTerm) {
+    searchTerm = query?.searchTerm as string ; 
+  }
+
+    const result = await Student.find({
+      $or:['email', 'name.firstName','presentAddress' ].map((field)=> ({
+        [field]:{$regex:searchTerm, $options:'i' }
+      }) )
+    }) .populate('admissionSemester')
     .populate({
       path: 'academicDepartment',
       populate: {
