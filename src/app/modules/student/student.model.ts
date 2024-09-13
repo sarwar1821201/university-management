@@ -161,7 +161,7 @@ const userNameSchema = new Schema<TUserName>({
 
     // virtual
 studentSchema.virtual('fullName').get(function () {
-  return ( `${this.name.firstName} ${this.name.middleName} ${this.name.lastName}  `);
+  return ( `${this?.name?.firstName} ${this?.name?.middleName} ${this?.name?.lastName}  `);
 });
 
 //     // pre save middleware/ hook : will work on create()  save()

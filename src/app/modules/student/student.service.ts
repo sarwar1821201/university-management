@@ -49,7 +49,7 @@ import { TStudent } from "./student.interface";
          // FILTERING fUNCTIONALITY:
           //  , 'limit', 'page', 'fields'
   
-  const excludeFields = ['searchTerm', 'sort' , 'limit' ];
+  const excludeFields = ['searchTerm', 'sort' , 'limit','page', 'fields' ];
   excludeFields.forEach((el) => delete queryObj[el]);  // DELETING THE FIELDS SO THAT IT CAN'T MATCH OR FILTER EXACTLY
 
 
@@ -73,9 +73,9 @@ import { TStudent } from "./student.interface";
 
   // PAGINATION FUNCTIONALITY:
 
- // let page = 1; // SET DEFAULT VALUE FOR PAGE 
+  let page = 1; // SET DEFAULT VALUE FOR PAGE 
   let limit = 1; // SET DEFAULT VALUE FOR LIMIT 
-  //let skip = 0; // SET DEFAULT VALUE FOR SKIP
+  let skip = 0; // SET DEFAULT VALUE FOR SKIP
 
   // IF limit IS GIVEN SET IT
   
@@ -84,10 +84,35 @@ import { TStudent } from "./student.interface";
    // limit = (query.limit);
   }
 
-   const limitQuery=await sortQuery.limit(limit)
+     // IF page IS GIVEN SET IT
+
+  if (query.page) {
+    page = Number(query.page);
+    skip = (page - 1) * limit;
+  }
+
+  const paginateQuery = sortQuery.skip(skip);
+   const limitQuery= sortQuery.limit(limit);
+
+       // FIELDS LIMITING FUNCTIONALITY:
+
+  // HOW OUR FORMAT SHOULD BE FOR PARTIAL MATCH 
+
+  //fields: 'name,email'; // WE ARE ACCEPTING FROM REQUEST
+  //fields: 'name email'; // HOW IT SHOULD BE 
+
+  let fields = '-__v'; // SET DEFAULT VALUE
+
+  if (query.fields) {
+    fields = (query.fields as string).split(',').join(' ');
+
+  }
+
+  const fieldQuery = await limitQuery.select(fields);
 
     //return sortQuery;
-    return limitQuery;
+    //return limitQuery;
+    return fieldQuery;
   };
   
   const getSingleStudentFromDB = async (id: string) => {
