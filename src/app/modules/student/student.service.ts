@@ -22,10 +22,14 @@ import { TStudent } from "./student.interface";
 
   const getAllStudentsFromDB = async (query: Record<string,unknown> ) => {
 
+    const queryObj = { ...query }; // copying req.query object so that we can mutate the copy object 
+
      // HOW OUR FORMAT SHOULD BE FOR PARTIAL MATCH  : 
   //{ email: { $regex : query.searchTerm , $options: i}}
  // { presentAddress: { $regex : query.searchTerm , $options: i}}
  // { 'name.firstName': { $regex : query.searchTerm , $options: i}}
+
+     const studentSearchableFields=['email', 'name.firstName','presentAddress' ]
 
     let searchTerm = '';   // SET DEFAULT VALUE 
 
@@ -34,18 +38,56 @@ import { TStudent } from "./student.interface";
     searchTerm = query?.searchTerm as string ; 
   }
 
-    const result = await Student.find({
-      $or:['email', 'name.firstName','presentAddress' ].map((field)=> ({
-        [field]:{$regex:searchTerm, $options:'i' }
-      }) )
-    }) .populate('admissionSemester')
+       // WE ARE DYNAMICALLY DOING IT USING LOOP
+   const searchQuery = Student.find({
+    $or: studentSearchableFields.map((field) => ({
+      [field]: { $regex: searchTerm, $options: 'i' },
+   })),
+  });
+
+
+         // FILTERING fUNCTIONALITY:
+          //  , 'limit', 'page', 'fields'
+  
+  const excludeFields = ['searchTerm', 'sort' , 'limit' ];
+  excludeFields.forEach((el) => delete queryObj[el]);  // DELETING THE FIELDS SO THAT IT CAN'T MATCH OR FILTER EXACTLY
+
+
+    const filterQuery =  searchQuery.find(queryObj).populate('admissionSemester')
     .populate({
       path: 'academicDepartment',
       populate: {
         path: 'academicFaculty',
       },
     });
-    return result;
+
+      // SORTING FUNCTIONALITY:
+  let sort = '-createdAt'; // SET DEFAULT VALUE 
+
+   // IF sort  IS GIVEN SET IT
+   if (query.sort) {
+    sort = query.sort as string;
+  }
+
+  const sortQuery =  filterQuery.sort(sort)  ;
+
+  // PAGINATION FUNCTIONALITY:
+
+ // let page = 1; // SET DEFAULT VALUE FOR PAGE 
+  let limit = 1; // SET DEFAULT VALUE FOR LIMIT 
+  //let skip = 0; // SET DEFAULT VALUE FOR SKIP
+
+  // IF limit IS GIVEN SET IT
+  
+  if (query.limit) {
+    limit = Number(query.limit);
+   // limit = (query.limit);
+  }
+
+   const limitQuery=await sortQuery.limit(limit)
+
+    //return sortQuery;
+    return limitQuery;
   };
   
   const getSingleStudentFromDB = async (id: string) => {
@@ -98,7 +140,7 @@ import { TStudent } from "./student.interface";
       }
     }
   
-    console.log(modifiedUpdatedData);
+   // console.log(modifiedUpdatedData);
   
     const result = await Student.findOneAndUpdate({ id }, modifiedUpdatedData, {
       new: true,
