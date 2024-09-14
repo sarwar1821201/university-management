@@ -1,5 +1,6 @@
-import { Schema } from "mongoose";
+import { model, Schema } from "mongoose";
 import { FacultyModel, TFaculty, TUserName } from "./faculty.interface";
+import { BloodGroup, Gender } from "./faculty.constant";
 
 
 const userNameSchema = new Schema<TUserName>({
@@ -61,7 +62,7 @@ const userNameSchema = new Schema<TUserName>({
         type: String,
         required: [true, 'Emergency contact number is required'],
       },
-      bloogGroup: {
+      bloodGroup: {
         type: String,
         enum: {
           values: BloodGroup,
