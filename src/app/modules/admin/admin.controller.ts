@@ -34,7 +34,7 @@ const updateAdmin = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Admin is updated succesfully',
+    message: 'Admin is updated successfully',
     data: result,
   });
 });
