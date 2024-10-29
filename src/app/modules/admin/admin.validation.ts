@@ -1,5 +1,5 @@
 import { z } from 'zod';
-//import { BloodGroup, Gender } from './admin.constant';
+import { BloodGroup, Gender } from './admin.constant';
 
 const createUserNameValidationSchema = z.object({
   firstName: z.string().min(1).max(20),
@@ -18,7 +18,7 @@ export const createAdminValidationSchema = z.object({
       email: z.string().email(),
       contactNo: z.string(),
       emergencyContactNo: z.string(),
-      bloogGroup: z.enum([...BloodGroup] as [string, ...string[]]),
+      bloodGroup: z.enum([...BloodGroup] as [string, ...string[]]),
       presentAddress: z.string(),
       permanentAddress: z.string(),
       profileImg: z.string(),
