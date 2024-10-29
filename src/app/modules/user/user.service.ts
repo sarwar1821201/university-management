@@ -9,11 +9,12 @@ import { Student } from "../student/student.model";
 import {  TUser } from "./user.interface";
 //import { Student } from "../student/student.model";
 import { User } from "./user.model";
-import { generateStudentId } from "./user.utils";
+import { generateFacultyId, generateStudentId } from "./user.utils";
 import AppError from "../../errors/AppError";
 import httpStatus from "http-status";
 import { TFaculty } from "../faculty/faculty.interface";
 import { AcademicDepartment } from "../academicDepartment/academicDepartment.model";
+import { Faculty } from "../faculty/faculty.model";
 
 
 const createStudentIntoDB = async ( password:string,payLoad: TStudent) => {
@@ -158,5 +159,6 @@ const createFacultyIntoDB = async (password: string, payload: TFaculty) => {
 
 
     export const UserServices={
-        createStudentIntoDB
+        createStudentIntoDB,
+        createFacultyIntoDB,
      }
