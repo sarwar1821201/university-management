@@ -7,6 +7,7 @@ import QueryBuilder from '../../builder/QueryBuilder';
 import AppError from '../../errors/AppError';
 import { Course } from './course.model';
 import { TCourse } from './course.interface';
+import { CourseSearchableFields } from './course.constant';
 //import { CourseSearchableFields } from './course.constant';
 //import { TCourse, TCoursefaculty } from './course.interface';
 //import { Course, CourseFaculty } from './course.model';
@@ -16,26 +17,24 @@ const createCourseIntoDB = async (payload: TCourse) => {
   return result;
 };
 
-// const getAllCoursesFromDB = async (query: Record<string, unknown>) => {
-//   const courseQuery = new QueryBuilder(
-//     Course.find(),
-//     // .populate('preRequisiteCourses.course'),
-//     query,
-//   )
-//     .search(CourseSearchableFields)
-//     .filter()
-//     .sort()
-//     .paginate()
-//     .fields();
+const getAllCoursesFromDB = async (query: Record<string, unknown>) => {
+  const courseQuery = new QueryBuilder(
+    // Course.find(),
+    Course.find()
+     .populate('preRequisiteCourses.course'),
+    query,
+  )
+    .search(CourseSearchableFields)
+    .filter()
+    .sort()
+    .paginate()
+    .fields();
 
-//   const result = await courseQuery.modelQuery;
-//   return result;
-// };
+  const result = await courseQuery.modelQuery;
+  return result;
+};
     
-  const  getAllCoursesFromDB=async()=>{
-    const result = await Course.find();
-    return result;
-  }
+  
 
 const getSingleCourseFromDB = async (id: string) => {
   const result = await Course.findById(id).populate(
