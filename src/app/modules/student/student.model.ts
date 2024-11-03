@@ -10,7 +10,7 @@ const userNameSchema = new Schema<TUserName>({
         type: String,
         required: [true, 'First Name is required'],
         trim: true,
-        maxlength: [20, 'Name can not be more than 20 characters'],
+        maxLength: [20, 'Name can not be more than 20 characters'],
     },
     middleName: {
       type: String,
@@ -20,7 +20,7 @@ const userNameSchema = new Schema<TUserName>({
         type: String,
         trim: true,
         required: [true, 'Last Name is required'],
-        maxlength: [20, 'Name can not be more than 20 characters'],
+        maxLength: [20, 'Name can not be more than 20 characters'],
         // validate:{
         //     validator:(value:string)=> validator.isAlpha(value),
         //     message:'{VALUE} is not valid '
