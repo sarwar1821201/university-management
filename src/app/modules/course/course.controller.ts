@@ -38,6 +38,19 @@ const createCourse = catchAsync(async (req, res) => {
       data: result,
     });
   });
+
+
+  const updateCourse = catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const result = await CourseServices.updateCourseIntoDB(id, req.body);
+  
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'course is updated successfully',
+      data: result,
+    });
+  });
   
   
   
@@ -61,7 +74,7 @@ const createCourse = catchAsync(async (req, res) => {
     createCourse,
     getSingleCourse,
     getAllCourses,
-   // updateCourse,
+    updateCourse,
     deleteCourse,
    // assignFacultiesWithCourse,
    // removeFacultiesFromCourse,

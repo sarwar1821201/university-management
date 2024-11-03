@@ -146,7 +146,7 @@ export const CourseServices = {
   createCourseIntoDB,
   getAllCoursesFromDB,
   getSingleCourseFromDB,
- // updateCourseIntoDB,
+  updateCourseIntoDB,
   deleteCourseFromDB,
   //assignFacultiesWithCourseIntoDB,
   //removeFacultiesFromCourseFromDB,
