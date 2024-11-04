@@ -43,23 +43,23 @@ const getSingleCourseFromDB = async (id: string) => {
   return result;
 };
 
-// const updateCourseIntoDB = async (id: string, payload: Partial<TCourse>) => {
-//   const { preRequisiteCourses, ...courseRemainingData } = payload;
+const updateCourseIntoDB = async (id: string, payload: Partial<TCourse>) => {
+  const { preRequisiteCourses, ...courseRemainingData } = payload;
 
 //   const session = await mongoose.startSession();
 
 //   try {
 //     session.startTransaction();
-//     //step1: basic course info update
-//     const updatedBasicCourseInfo = await Course.findByIdAndUpdate(
-//       id,
-//       courseRemainingData,
-//       {
-//         new: true,
-//         runValidators: true,
+     //step1: basic course info update
+    const updatedBasicCourseInfo = await Course.findByIdAndUpdate(
+      id,
+       courseRemainingData,
+      {
+        new: true,
+       runValidators: true,
 //         session,
-//       },
-//     );
+      },
+    );
 
 //     if (!updatedBasicCourseInfo) {
 //       throw new AppError(httpStatus.BAD_REQUEST, 'Failed to update course!');
@@ -125,7 +125,9 @@ const getSingleCourseFromDB = async (id: string) => {
 //     await session.endSession();
 //     throw new AppError(httpStatus.BAD_REQUEST, 'Failed to update course');
 //   }
-// };
+
+    return updatedBasicCourseInfo;
+ };
 
 const deleteCourseFromDB = async (id: string) => {
   const result = await Course.findByIdAndUpdate(
