@@ -90,22 +90,22 @@ const updateCourseIntoDB = async (id: string, payload: Partial<TCourse>) => {
 //         throw new AppError(httpStatus.BAD_REQUEST, 'Failed to update course!');
 //       }
 
-//       // filter out the new course fields
-//       const newPreRequisites = preRequisiteCourses?.filter(
-//         (el) => el.course && !el.isDeleted,
-//       );
+       // filter out the new course fields
+      const newPreRequisites = preRequisiteCourses?.filter(
+         (el) => el.course && !el.isDeleted,
+       );
 
-//       const newPreRequisiteCourses = await Course.findByIdAndUpdate(
-//         id,
-//         {
-//           $addToSet: { preRequisiteCourses: { $each: newPreRequisites } },
-//         },
+       const newPreRequisiteCourses = await Course.findByIdAndUpdate(
+        id,
+       {
+         $addToSet: { preRequisiteCourses: { $each: newPreRequisites } },
+         },
 //         {
 //           new: true,
 //           runValidators: true,
 //           session,
 //         },
-//       );
+      );
 
 //       if (!newPreRequisiteCourses) {
 //         throw new AppError(httpStatus.BAD_REQUEST, 'Failed to update course!');
@@ -115,9 +115,9 @@ const updateCourseIntoDB = async (id: string, payload: Partial<TCourse>) => {
 //     await session.commitTransaction();
 //     await session.endSession();
 
-//     const result = await Course.findById(id).populate(
-//       'preRequisiteCourses.course',
-//     );
+     const result = await Course.findById(id).populate(
+       'preRequisiteCourses.course',
+     );
 
 //     return result;
 //   } catch (err) {
