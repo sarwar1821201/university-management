@@ -8,6 +8,7 @@ import { NextFunction } from 'express';
 import globalErrorHandler from './app/middlewares/globalErrorHandler';
 import notFound from './app/middlewares/notFound';
 import router from './app/routes';
+import cookieParser from 'cookie-parser';
 //const express = require('express')
 const app:Application = express()
 //const port = 3000;
@@ -15,6 +16,7 @@ const app:Application = express()
 //parsers
 app.use(express.json());
 app.use(cors());
+app.use(cookieParser())
  
  // application routes
    app.use('/api/v1',router)
